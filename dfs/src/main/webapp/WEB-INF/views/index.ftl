@@ -1,10 +1,12 @@
-<#include "header.ftl">
-
-<h2 id="title">FTL: ${msg}</h2>
+<#include "templates/header.ftl">
+<#import "templates/spring.ftl" as spring />
+<h2>
+	<@spring.message 'main.page.title' />
+</h2>
 
 <#list msgs as m>
 ${m}
 <br/>
 </#list>
 
-<#include "footer.ftl">
+<#include "templates/footer.ftl">
