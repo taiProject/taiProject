@@ -1,12 +1,12 @@
 <#include "templates/header.ftl">
 <#import "templates/spring.ftl" as spring />
-<h2>
+<div id="pageTitle">
 	<@spring.message 'main.page.title' />
-</h2>
+</div>
 
 <#list msgs as m>
-${m}
-<br/>
+	${m}
+	<br/>
 </#list>
 
 <#include "templates/footer.ftl">

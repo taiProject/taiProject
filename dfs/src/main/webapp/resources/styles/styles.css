@@ -1,5 +1,8 @@
 @CHARSET "UTF-8";
 
-h2 {
-	color: red;
+#pageTitle {
+	font-size: x-large;
+	color: blue;
+	border-style: dotted;
+	border-width: 2px;
 }
