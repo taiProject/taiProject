@@ -4,9 +4,7 @@
 	<@spring.message 'main.page.title' />
 </div>
 
-<#list msgs as m>
-	${m}
-	<br/>
-</#list>
-
+${username}
+<br/>
+<a href="<@spring.url '/j_spring_security_logout'/>"><@spring.message 'logout' /></a>
 <#include "templates/footer.ftl">

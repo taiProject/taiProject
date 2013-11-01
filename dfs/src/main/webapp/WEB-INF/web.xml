@@ -12,6 +12,7 @@
 		<param-value>
 			/WEB-INF/config/application-config.xml,
 			/WEB-INF/config/spring-security.xml
+<!-- 			/WEB-INF/config/database-config.xml -->
 		</param-value>
 	</context-param>
 
