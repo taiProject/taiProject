@@ -19,7 +19,7 @@
 					<@spring.message 'login.password'/>:
 				</td>
 				<td>
-					<input type="text" name="j_password" id="j_password" size="30" maxlength="32" />
+					<input type="password" name="j_password" id="j_password" size="30" maxlength="32" />
 				</td>
 			</tr>
 			<tr>

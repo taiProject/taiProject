@@ -7,7 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @Scope("session")
-public class NavigationController {
+public class SecurityNavigationController {
 
 	@RequestMapping("/login")
 	public ModelAndView login() {
