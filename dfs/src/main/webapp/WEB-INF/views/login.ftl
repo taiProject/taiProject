@@ -1,7 +1,7 @@
 <#include "templates/header.ftl">
 <#import "templates/spring.ftl" as spring />
 
-<div>
+<div class="login" align="center">
 	<h1><@spring.message 'login.title' /></h1>
 
 	<form method="post" action="<@spring.url '/j_spring_security_check'/>">
@@ -23,30 +23,29 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan=2>
+				<td colspan=2 align="right">
 					<input type="submit" value="<@spring.message 'login.login.button'/>" />
 				</td>
 			</tr>
 		</table>
 	</form>
+
 </div>
 
-<br/>
-
-<div>
-	<#if message?has_content>
+<#if message?has_content>
+	<div class="loginInfo" id="<#if message == "bad credentials">error<#else>info</#if>">
 		<div>
-			<h3>
+			<h2>
 			<#if message == "bad credentials">
 				<@spring.message 'login.bad.credentials' />
 			<#else>
 				<@spring.message 'login.logout.success' />
 			</#if>
-			</h3>
+			</h2>
 		</div
 		<br/>
 		<br/>
-	</#if>
-</div
+	</div
+</#if>
 
 <#include "templates/footer.ftl">
