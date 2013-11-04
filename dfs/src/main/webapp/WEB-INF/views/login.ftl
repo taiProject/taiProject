@@ -1,7 +1,7 @@
 <#include "templates/header.ftl">
 <#import "templates/spring.ftl" as spring />
 
-<div class="login" align="center">
+<div class="login loginBase" align="center">
 	<h1><@spring.message 'login.title' /></h1>
 
 	<form method="post" action="<@spring.url '/j_spring_security_check'/>">
@@ -11,7 +11,7 @@
 					<@spring.message 'login.username' />:
 				</td>
 				<td>
-					<input type="text" name="j_username" id="j_username" size="30" maxlength="40" />
+					<input class="loginInput" type="text" name="j_username" id="j_username" size="30" maxlength="40" />
 				</td>
 			</tr>
 			<tr>
@@ -19,12 +19,12 @@
 					<@spring.message 'login.password'/>:
 				</td>
 				<td>
-					<input type="password" name="j_password" id="j_password" size="30" maxlength="32" />
+					<input class="loginInput" type="password" name="j_password" id="j_password" size="30" maxlength="32" />
 				</td>
 			</tr>
 			<tr>
 				<td colspan=2 align="right">
-					<input type="submit" value="<@spring.message 'login.login.button'/>" />
+					<input class="loginInput inputButton" type="submit" value="<@spring.message 'login.login.button'/>" />
 				</td>
 			</tr>
 		</table>
@@ -33,7 +33,7 @@
 </div>
 
 <#if message?has_content>
-	<div class="loginInfo" id="<#if message == "bad credentials">error<#else>info</#if>">
+	<div class="loginInfo loginBase" id="<#if message == "bad credentials">error<#else>info</#if>">
 		<div>
 			<h2>
 			<#if message == "bad credentials">
