@@ -43,8 +43,8 @@ public class ApplicationNavigationController implements Serializable {
 
 		try {
 			Drive service = DriveManager.getDriveService();
-			List<File> files = DriveManager.getAllFiles(service);
-
+            //File file = DriveManager.insertFile(service, "test.txt", "this is first insert", null, "text/plain", "G:\\STUDIA\\javaeetutorial5\\README.txt");
+            List<File> files = DriveManager.getAllFiles(service);
 			for (File f : files) {
 				System.out.println(f.getTitle());
 			}

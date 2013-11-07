@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.http.FileContent;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -15,6 +17,7 @@ import com.google.api.services.drive.Drive.Files;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
+import com.google.api.services.drive.model.ParentReference;
 
 public class DriveManager {
 
@@ -65,4 +68,30 @@ public class DriveManager {
 
 		return result;
 	}
+
+    public static File insertFile(Drive service, String title, String description, String parentId, String mimeType, String filename){
+        File body = new File();
+        body.setTitle(title);
+        body.setDescription(description);
+        body.setMimeType(mimeType);
+
+        if (parentId != null && parentId.length() > 0) {
+            body.setParents(
+                    Arrays.asList(new ParentReference().setId(parentId)));
+        }
+
+        java.io.File fileContent = new java.io.File(filename);
+        FileContent mediaContent = new FileContent(mimeType, fileContent);
+        try {
+            File file = service.files().insert(body, mediaContent).execute();
+
+            // Uncomment the following line to print the File ID.
+            // System.out.println("File ID: %s" + file.getId());
+
+            return file;
+        } catch (IOException e) {
+            System.out.println("An error occured: " + e);
+            return null;
+        }
+    }
 }

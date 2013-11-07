@@ -16,7 +16,7 @@ public class SecurityNavigationController implements Serializable {
 	public ModelAndView login() {
 		ModelAndView mav = new ModelAndView("login");
 
-		return mav;
+        return mav;
 	}
 
 	@RequestMapping("/loginfailed")
