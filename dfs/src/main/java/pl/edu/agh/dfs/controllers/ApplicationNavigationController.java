@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.edu.agh.dfs.googledrive.DriveManager;
 import pl.edu.agh.dfs.utils.SecurityHelper;
 
-import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
 
 @Controller
@@ -42,8 +41,7 @@ public class ApplicationNavigationController implements Serializable {
 		ModelAndView mav = new ModelAndView("filesList");
 
 		try {
-			Drive service = DriveManager.getDriveService();
-			List<File> files = DriveManager.getAllFiles(service);
+			List<File> files = DriveManager.getAllFiles();
 
 			for (File f : files) {
 				System.out.println(f.getTitle());
