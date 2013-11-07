@@ -1,4 +1,4 @@
-<#include "templates/header.ftl">
+<#include "templates/generalHeader.ftl">
 <#import "templates/spring.ftl" as spring />
 
 <div class="login loginBase" align="center">
