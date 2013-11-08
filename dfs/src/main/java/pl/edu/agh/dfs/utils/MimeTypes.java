@@ -37,7 +37,7 @@ public class MimeTypes {
 		if (filename.endsWith(".HTML")) {
 			return HTML;
 		}
-		if (filename.endsWith(". JPEG")) {
+		if (filename.endsWith(".JPEG")) {
 			return JPEG;
 		}
 		if (filename.endsWith(".MP3")) {
