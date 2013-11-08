@@ -40,12 +40,10 @@ public class ApplicationNavigationController implements Serializable {
 	public ModelAndView filesList() {
 		ModelAndView mav = new ModelAndView("filesList");
 
-		try {
-			List<File> files = DriveManager.getAllFiles();
+		List<File> files = null;
 
-			for (File f : files) {
-				System.out.println(f.getTitle());
-			}
+		try {
+			files = DriveManager.getAllFiles();
 		} catch (GeneralSecurityException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -55,6 +53,7 @@ public class ApplicationNavigationController implements Serializable {
 		}
 
 		mav.addObject("username", SecurityHelper.getUsername());
+		mav.addObject("files", files);
 
 		return mav;
 	}

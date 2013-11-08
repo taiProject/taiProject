@@ -1,6 +1,6 @@
 package pl.edu.agh.dfs.utils;
 
-public class MimeTypes {
+public abstract class MimeTypes {
 
 	private static String CSS = "text/css";
 	private static String CSV = "text/csv";

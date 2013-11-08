@@ -24,7 +24,7 @@ import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
 import com.google.api.services.drive.model.ParentReference;
 
-public class DriveManager {
+public abstract class DriveManager {
 
 	/** Email of the Service Account */
 	private static final String SERVICE_ACCOUNT_EMAIL = "1037047798881-90rmqar39s6uqi78bdk3dnmhbqbvqc1r@developer.gserviceaccount.com";
