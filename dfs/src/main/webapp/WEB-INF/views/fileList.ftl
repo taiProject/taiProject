@@ -46,9 +46,11 @@
 						</div>
 					</td>
 					<td>
-						<div class="tableButton">
-							<@spring.message 'files.file.delete' />
-						</div>
+						<a href="<@spring.url '/delete/${file.id}'/>">
+							<div class="tableButton">
+								<@spring.message 'files.file.delete' />
+							</div>
+						</a>
 					</td>
 				</#if>
 			</tr>

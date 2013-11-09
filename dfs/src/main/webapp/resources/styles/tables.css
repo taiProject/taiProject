@@ -4,14 +4,17 @@
 	width: 98%;
 	border: 1px solid #000080;
 	padding: 5px;
+	border-radius: 5px;
 }
 
 .filesTable td {
 	background-color: white;
+	
 }
 
-.filesTable tr {
+.filesTable th {
 	background-color: #000080;
+	border-radius: 5px;
 }
 
 #filesTableHead {

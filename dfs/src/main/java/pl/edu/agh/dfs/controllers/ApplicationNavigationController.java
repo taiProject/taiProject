@@ -41,7 +41,7 @@ public class ApplicationNavigationController implements Serializable {
 	}
 
 	@RequestMapping("/fileList")
-	public ModelAndView filesList() {
+	public ModelAndView fileList() {
 		ModelAndView mav = new ModelAndView("fileList");
 
 		downloadFiles();
@@ -101,7 +101,21 @@ public class ApplicationNavigationController implements Serializable {
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
+	}
 
+	@RequestMapping(value = "/delete/{fileId}", method = RequestMethod.GET)
+	public String delete(@PathVariable("fileId") String fileId) {
+		try {
+			DriveManager.deleteFile(fileId);
+		} catch (GeneralSecurityException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/fileList";
 	}
 
 	private void addCommonValues(ModelAndView mav, String name) {

@@ -39,13 +39,13 @@ public class DriveManagerTest {
 			System.out.println(f.getTitle());
 		}
 
-		DriveManager.deleteFile(fl.getId());
-
-		files = DriveManager.getAllFiles();
-
-		for (File f : files) {
-			System.out.println(f.getTitle());
-		}
+		// DriveManager.deleteFile(fl.getId());
+		//
+		// files = DriveManager.getAllFiles();
+		//
+		// for (File f : files) {
+		// System.out.println(f.getTitle());
+		// }
 	}
 
 	@Test
