@@ -17,3 +17,23 @@
 #filesTableHead {
 	color: white;
 }
+
+.tableButton {
+	height: 25px;
+	width: 80px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #000080;
+	color: #ffffff;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	font-weight: bolder;
+	text-align: center;
+	line-height: 25px;
+	vertical-align: middle;
+}
+
+.tableButton:HOVER {
+	background-color: #0000af;
+	cursor: pointer;
+}

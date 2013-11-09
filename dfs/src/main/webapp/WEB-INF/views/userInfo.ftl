@@ -1,6 +1,6 @@
 <#include "templates/header.ftl">
 <#import "templates/spring.ftl" as spring />
-<div class="pageTitle">
+<div class="pageTitle fontStyle">
 	<@spring.message 'user.info.title' />
 </div>
 

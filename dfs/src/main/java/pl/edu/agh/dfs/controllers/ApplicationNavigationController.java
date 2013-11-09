@@ -25,13 +25,13 @@ public class ApplicationNavigationController implements Serializable {
 	public ModelAndView demo() {
 		ModelAndView mav = new ModelAndView("index");
 
-		addCommonValues(mav);
+		addCommonValues(mav, "home");
 		return mav;
 	}
 
-	@RequestMapping("/filesList")
+	@RequestMapping("/fileList")
 	public ModelAndView filesList() {
-		ModelAndView mav = new ModelAndView("filesList");
+		ModelAndView mav = new ModelAndView("fileList");
 
 		List<File> files = null;
 
@@ -47,7 +47,7 @@ public class ApplicationNavigationController implements Serializable {
 
 		mav.addObject("files", files);
 
-		addCommonValues(mav);
+		addCommonValues(mav, "fileList");
 		return mav;
 	}
 
@@ -55,7 +55,7 @@ public class ApplicationNavigationController implements Serializable {
 	public ModelAndView userInfo() {
 		ModelAndView mav = new ModelAndView("userInfo");
 
-		addCommonValues(mav);
+		addCommonValues(mav, "userInfo");
 		return mav;
 	}
 
@@ -63,12 +63,13 @@ public class ApplicationNavigationController implements Serializable {
 	public ModelAndView userManagement() {
 		ModelAndView mav = new ModelAndView("userManagement");
 
-		addCommonValues(mav);
+		addCommonValues(mav, "userManagement");
 		return mav;
 	}
 
-	private void addCommonValues(ModelAndView mav) {
+	private void addCommonValues(ModelAndView mav, String name) {
 		mav.addObject("isAdmin", SecurityHelper.hasUserRole("ROLE_ADMIN"));
 		mav.addObject("username", SecurityHelper.getUsername());
+		mav.addObject("viewName", name);
 	}
 }
