@@ -20,11 +20,15 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		String username = authentication.getName();
 		String password = authentication.getCredentials().toString();
 
-		if (username.equals("admin") && password.equals("123")) {
-			SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
-			List<GrantedAuthority> authorities = new LinkedList<GrantedAuthority>();
-			authorities.add(authority);
+		SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
+		List<GrantedAuthority> authorities = new LinkedList<GrantedAuthority>();
+		authorities.add(authority);
 
+		if (username.equals("admin") && password.equals("123")) {
+			authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+
+			return new UsernamePasswordAuthenticationToken(username, password, authorities);
+		} else if (username.equals("user") && password.equals("123")) {
 			return new UsernamePasswordAuthenticationToken(username, password, authorities);
 		}
 		throw new BadCredentialsException("Bad credentials");

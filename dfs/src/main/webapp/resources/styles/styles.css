@@ -1,14 +1,25 @@
 @CHARSET "UTF-8";
 
+a {
+	text-decoration: none;
+}
+
 .applicationLogo {
-	width: 560px;
+	width: 700px;
 	margin-left: auto;
 	margin-right: auto;
 }
 
-#pageTitle {
-	width: 100%;
+.pageTitle {
+	padding-top: 20px;
+	padding-bottom: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 700px;
+	height: 60px;
 	font-size: xx-large;
+	text-align: center;
+	font-weight: bolder;
 }
 
 .inputButton {
@@ -18,7 +29,7 @@
 	background: lightgray;
 	color: #000;
 	font: 14px Helvetica, Verdana, sans-serif;
-	font-weight:bold;
+	font-weight: bold;
 	text-decoration: none;
 	-moz-border-radius-topleft: 4px;
 	-moz-border-radius-topright: 4px;
@@ -76,30 +87,36 @@
 	border-radius: 5px;
 }
 
-/* MAIN MENU */
+.contentDiv {
+	width: 80%;
+	min-width: 700 px;
+	margin-left: auto;
+	margin-right: auto;
+}
 
+/* MAIN MENU */
 .mainMenu {
 	width: 100%;
+	min-width: 700px;
 	height: 30px;
 	margin-bottom: 15px;
+	margin-top: 10px;
 	text-align: center;
 }
 
-.mainMenu ul {
+.menuButton {
+	margin-left: 10px;
+	width: 150px;
+	height: 28px;
 	display: inline-block;
-}
-
-.mainMenu li {
-	display: inline;
-	list-style-type: none;
-	text-align: center;
-	width: 100px;
-}
-
-.mainMenu li:BEFORE {
-	content: " | ";
-}
-
-.mainMenu li:FIRST-CHILD:BEFORE {
-	content: none;
+	background-color: #000080;
+	color: #ffffff;
+	border-radius: 5px;
+	box-shadow: 0 0 3px 3px #888;
+	-moz-border-radius: 5px;
+	-moz-box-shadow: 0 0 3px 3px #888;
+	-webkit-box-shadow: 0 0 3px 3px #888;
+	font-weight: bolder; vertical-align : middle;
+	line-height: 28px;
+	vertical-align: middle;
 }

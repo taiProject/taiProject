@@ -23,16 +23,9 @@ public class ApplicationNavigationController implements Serializable {
 
 	@RequestMapping("/*")
 	public ModelAndView demo() {
-		ModelAndView mav;
+		ModelAndView mav = new ModelAndView("index");
 
-		if (SecurityHelper.hasUserRole("ROLE_ADMIN")) {
-			mav = new ModelAndView("index");
-		} else {
-			mav = new ModelAndView("index");
-		}
-
-		mav.addObject("username", SecurityHelper.getUsername());
-
+		addCommonValues(mav);
 		return mav;
 	}
 
@@ -52,9 +45,30 @@ public class ApplicationNavigationController implements Serializable {
 			e.printStackTrace();
 		}
 
-		mav.addObject("username", SecurityHelper.getUsername());
 		mav.addObject("files", files);
 
+		addCommonValues(mav);
 		return mav;
+	}
+
+	@RequestMapping("/userInfo")
+	public ModelAndView userInfo() {
+		ModelAndView mav = new ModelAndView("userInfo");
+
+		addCommonValues(mav);
+		return mav;
+	}
+
+	@RequestMapping("/userManagement")
+	public ModelAndView userManagement() {
+		ModelAndView mav = new ModelAndView("userManagement");
+
+		addCommonValues(mav);
+		return mav;
+	}
+
+	private void addCommonValues(ModelAndView mav) {
+		mav.addObject("isAdmin", SecurityHelper.hasUserRole("ROLE_ADMIN"));
+		mav.addObject("username", SecurityHelper.getUsername());
 	}
 }

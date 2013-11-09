@@ -7,5 +7,7 @@
 </head>
 <body>
 <div class="applicationLogo">
-	<img src="<@spring.url '/resources/images/logo.png'/>"/>
+	<center>
+		<img src="<@spring.url '/resources/images/logo.png'/>"/>
+	</center>
 </div>

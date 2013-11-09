@@ -32,6 +32,9 @@ public abstract class DriveManager {
 	/** Path to the Service Account's Private Key file */
 	private static final String SERVICE_ACCOUNT_PKCS12_FILE_PATH = "googleAuthentication/4656349a2c2ec6511a6790dba4deee6fc115eaa1-privatekey.p12";
 
+	/** Application name */
+	private static final String APPLICATION_NAME = "GoogleDriveFileSharing";
+
 	/**
 	 * Build and returns a Drive service object authorized with the service
 	 * accounts.
@@ -51,7 +54,7 @@ public abstract class DriveManager {
 				.setJsonFactory(jsonFactory).setServiceAccountId(SERVICE_ACCOUNT_EMAIL).setServiceAccountScopes(scopes)
 				.setServiceAccountPrivateKeyFromP12File(new java.io.File(filename)).build();
 		Drive service = new Drive.Builder(httpTransport, jsonFactory, null).setHttpRequestInitializer(credential)
-				.build();
+				.setApplicationName(APPLICATION_NAME).build();
 		return service;
 	}
 
