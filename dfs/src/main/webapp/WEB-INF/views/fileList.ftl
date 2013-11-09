@@ -13,6 +13,8 @@
 			<th>
 				<@spring.message 'files.file.description' />
 			</th>
+			<th>
+			</th>
 			<#if isAdmin>
 				<th>
 				</th>
@@ -20,6 +22,7 @@
 				</th>
 			</#if>
 		</tr>
+		<#assign cnt = 0/>
 		<#if files??>
 		<#list files as file>
 			<tr>
@@ -28,6 +31,13 @@
 				</td>
 				<td>
 					${file.description}
+				</td>
+				<td>
+					<a href="<@spring.url '/file/${cnt}'/>">
+						<div class="tableButton">
+							<@spring.message 'files.file.download' />
+						</div>
+					</a>
 				</td>
 				<#if isAdmin>
 					<td>
@@ -42,6 +52,7 @@
 					</td>
 				</#if>
 			</tr>
+		<#assign cnt = cnt + 1/>
 		</#list>
 		</#if>
 	</table>
