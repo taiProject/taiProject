@@ -3,8 +3,5 @@
 <div id="pageTitle">
 	<@spring.message 'main.page.title' />
 </div>
-
-${username}
 <br/>
-<a href="<@spring.url '/j_spring_security_logout'/>"><@spring.message 'logout' /></a>
 <#include "templates/footer.ftl">

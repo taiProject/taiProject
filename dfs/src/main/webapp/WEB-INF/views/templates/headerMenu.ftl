@@ -1,10 +1,16 @@
-<table>
-	<tr>
-		<td>
+<div class="mainMenu">
+	<ul>
+		<li>
 			<a href="<@spring.url '/index'/>"><@spring.message 'homePage' /></a>
-		</td>
-		<td>
+		</li>
+		<li>
 			<a href="<@spring.url '/filesList'/>"><@spring.message 'filesList' /></a>
-		</td>
-	</tr>
-</table>
+		</li>
+		<li>
+			${username}
+		</li>
+		<li>
+			<a href="<@spring.url '/j_spring_security_logout'/>"><@spring.message 'logout' /></a>
+		</li>
+	</ul>
+</div>

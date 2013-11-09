@@ -1,10 +1,14 @@
 @CHARSET "UTF-8";
 
+.applicationLogo {
+	width: 560px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 #pageTitle {
-	font-size: x-large;
-	color: blue;
-	border-style: dotted;
-	border-width: 2px;
+	width: 100%;
+	font-size: xx-large;
 }
 
 .inputButton {
@@ -70,4 +74,32 @@
 
 .loginInput {
 	border-radius: 5px;
+}
+
+/* MAIN MENU */
+
+.mainMenu {
+	width: 100%;
+	height: 30px;
+	margin-bottom: 15px;
+	text-align: center;
+}
+
+.mainMenu ul {
+	display: inline-block;
+}
+
+.mainMenu li {
+	display: inline;
+	list-style-type: none;
+	text-align: center;
+	width: 100px;
+}
+
+.mainMenu li:BEFORE {
+	content: " | ";
+}
+
+.mainMenu li:FIRST-CHILD:BEFORE {
+	content: none;
 }

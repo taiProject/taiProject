@@ -4,17 +4,14 @@
 	<@spring.message 'files.list.title' />
 </div>
 
-${username}
-<br/>
-<br/>
-<table border="1">
-	<tr>
-		<td>
+<table class="filesTable">
+	<tr id="filesTableHead">
+		<th>
 			Title
-		</td>
-		<td>
+		</th>
+		<th>
 			Description
-		</td>
+		</th>
 	</tr>
 	<#if files??>
 	<#list files as file>
@@ -32,5 +29,5 @@ ${username}
 
 <br/>
 <br/>
-<a href="<@spring.url '/j_spring_security_logout'/>"><@spring.message 'logout' /></a>
+
 <#include "templates/footer.ftl">
