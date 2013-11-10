@@ -1,10 +1,20 @@
 <#include "templates/header.ftl">
 <#import "templates/spring.ftl" as spring />
+<#import "templates/macros.ftl" as m />
+
+
 <div class="pageTitle fontStyle">
 	<@spring.message 'files.list.title' />
 </div>
 
 <div class="contentDiv">
+	<#if isAdmin>
+		<div class="generalButtons">
+			<@m.button 'files.file.delete.all' '/deleteAll' true/>
+			<@m.button 'files.file.new' '/newFile' true/>
+		</div>
+	</#if>
+	
 	<table class="filesTable">
 		<tr id="filesTableHead">
 			<th>
@@ -13,12 +23,12 @@
 			<th>
 				<@spring.message 'files.file.description' />
 			</th>
-			<th>
+			<th class="buttonCell">
 			</th>
 			<#if isAdmin>
-				<th>
+				<th class="buttonCell">
 				</th>
-				<th>
+				<th class="buttonCell">
 				</th>
 			</#if>
 		</tr>
@@ -32,25 +42,15 @@
 				<td>
 					${file.description}
 				</td>
-				<td>
-					<a href="<@spring.url '/file/${cnt}'/>">
-						<div class="tableButton">
-							<@spring.message 'files.file.download' />
-						</div>
-					</a>
+				<td class="buttonCell">
+					<@m.button 'files.file.download' '/file/${cnt}' false/>
 				</td>
 				<#if isAdmin>
-					<td>
-						<div class="tableButton">
-							<@spring.message 'files.file.edit' />
-						</div>
+					<td class="buttonCell">
+						<@m.button 'files.file.edit' '/edit/${cnt}' false/>
 					</td>
-					<td>
-						<a href="<@spring.url '/delete/${file.id}'/>">
-							<div class="tableButton">
-								<@spring.message 'files.file.delete' />
-							</div>
-						</a>
+					<td class="buttonCell">
+						<@m.button 'files.file.delete' '/delete/${file.id}' false/>
 					</td>
 				</#if>
 			</tr>
@@ -58,6 +58,13 @@
 		</#list>
 		</#if>
 	</table>
+	
+	<#if isAdmin>
+		<div class="generalButtons">
+			<@m.button 'files.file.delete.all' '/deleteAll' true/>
+			<@m.button 'files.file.new' '/newFile' true/>
+		</div>
+	</#if>
 </div>
 
 <#include "templates/footer.ftl">
