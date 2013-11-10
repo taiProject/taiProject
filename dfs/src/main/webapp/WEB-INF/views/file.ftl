@@ -15,20 +15,24 @@
 <center>
 	<form method="post" action="<#if newFile><@spring.url '/uploadFile'/><#else><@spring.url '/editFile'/></#if>" enctype="multipart/form-data">
 		<table class="fileTable">
-			<tr>
-				<td class="fontStyle">
-					<@spring.message 'file.file.location' />:
-				</td>
-				<td>
-					<input class="loginInput fileInput" type="file" name="file" id="file" />
-				</td>
-			</tr>
+			<#if newFile>
+				<tr>
+					<td class="fontStyle">
+						<@spring.message 'file.file.location' />:
+					</td>
+					<td>
+						<input class="loginInput fileInput" type="file" name="file" id="file" />
+					</td>
+				</tr>
+			<#else>
+				<input type="hidden" name="fileNr" value="${fileNr}"/>
+			</#if>
 			<tr>
 				<td class="fontStyle">
 					<@spring.message 'file.name' />:
 				</td>
 				<td>
-					<input class="loginInput fileInput" type="text" name="fileName" id="fileName"  maxlength="64" />
+					<input class="loginInput fileInput" type="text" name="fileName" id="fileName"  maxlength="64" <#if !newFile>value="${file.title}"</#if> />
 				</td>
 			</tr>
 			<tr>
@@ -36,7 +40,7 @@
 					<@spring.message 'file.description'/>:
 				</td>
 				<td>
-					<textarea class="loginInput fileInput textarea" name="description" id="description" rows="5" ></textarea>
+					<textarea class="loginInput fileInput textarea" name="description" id="description" rows="5" ><#if !newFile>${file.description}</#if></textarea>
 				</td>
 			</tr>
 			<tr>

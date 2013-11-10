@@ -11,6 +11,7 @@ import java.util.List;
 import pl.edu.agh.dfs.utils.MimeTypes;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.http.ByteArrayContent;
 import com.google.api.client.http.FileContent;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpResponse;
@@ -100,6 +101,21 @@ public abstract class DriveManager {
 	}
 
 	/**
+	 * Insert new file.
+	 * 
+	 * @param file
+	 *            Inserted file
+	 * @param content
+	 *            File content
+	 * @return Inserted file metadata if successful, {@code null} otherwise.
+	 */
+	public static File insertFile(File file, ByteArrayContent content) throws GeneralSecurityException, IOException,
+			URISyntaxException {
+		Drive drive = getDriveService();
+		return drive.files().insert(file, content).execute();
+	}
+
+	/**
 	 * Download a file's content.
 	 * 
 	 * @param file
@@ -121,6 +137,17 @@ public abstract class DriveManager {
 	public static void deleteFile(String fileId) throws GeneralSecurityException, IOException, URISyntaxException {
 		Drive drive = getDriveService();
 		deleteFile(drive, fileId);
+	}
+
+	public static File updateFile(String fileId, String title, String description, String mimeType, String fileName)
+			throws GeneralSecurityException, IOException, URISyntaxException {
+		Drive drive = getDriveService();
+		return updateFile(drive, fileId, title, description, mimeType, fileName, true);
+	}
+
+	public static File updateFile(File file) throws GeneralSecurityException, IOException, URISyntaxException {
+		Drive drive = getDriveService();
+		return drive.files().update(file.getId(), file).execute();
 	}
 
 	/**
@@ -235,6 +262,50 @@ public abstract class DriveManager {
 			service.files().delete(fileId).execute();
 		} catch (IOException e) {
 			System.out.println("An error occurred: " + e);
+		}
+	}
+
+	/**
+	 * Update an existing file's metadata and content.
+	 * 
+	 * @param service
+	 *            Drive API service instance.
+	 * @param fileId
+	 *            ID of the file to update.
+	 * @param newTitle
+	 *            New title for the file.
+	 * @param newDescription
+	 *            New description for the file.
+	 * @param newMimeType
+	 *            New MIME type for the file.
+	 * @param newFilename
+	 *            Filename of the new content to upload.
+	 * @param newRevision
+	 *            Whether or not to create a new revision for this file.
+	 * @return Updated file metadata if successful, {@code null} otherwise.
+	 */
+	private static File updateFile(Drive service, String fileId, String newTitle, String newDescription,
+			String newMimeType, String newFilename, boolean newRevision) {
+		try {
+			// First retrieve the file from the API.
+			File file = service.files().get(fileId).execute();
+
+			// File's new metadata.
+			file.setTitle(newTitle);
+			file.setDescription(newDescription);
+			file.setMimeType(newMimeType);
+
+			// File's new content.
+			java.io.File fileContent = new java.io.File(newFilename);
+			FileContent mediaContent = new FileContent(newMimeType, fileContent);
+
+			// Send the request to the API.
+			File updatedFile = service.files().update(fileId, file, mediaContent).execute();
+
+			return updatedFile;
+		} catch (IOException e) {
+			System.out.println("An error occurred: " + e);
+			return null;
 		}
 	}
 }

@@ -175,10 +175,53 @@ public class ApplicationNavigationController implements Serializable {
 
 		try {
 			ByteArrayContent fileContent = new ByteArrayContent(file.getContentType(), file.getBytes());
-			DriveManager.getDriveService().files().insert(uploadFile, fileContent).execute();
+			DriveManager.insertFile(uploadFile, fileContent);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (GeneralSecurityException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+
+		return mav;
+	}
+
+	@RequestMapping(value = "/edit/{fileNr}", method = RequestMethod.GET)
+	public ModelAndView editFile(@PathVariable("fileNr") int fileNr) {
+		ModelAndView mav = new ModelAndView("file");
+
+		if (files == null) {
+			return new ModelAndView("redirect:/fileList");
+		}
+
+		mav.addObject("file", files.get(fileNr));
+		mav.addObject("fileNr", fileNr);
+		mav.addObject("newFile", false);
+
+		addCommonValues(mav, "fileList");
+		return mav;
+	}
+
+	@RequestMapping(value = "/editFile", method = RequestMethod.POST)
+	public ModelAndView uploadFile(@RequestParam("fileName") String fileName,
+			@RequestParam("description") String description, @RequestParam("fileNr") int fileNr) {
+		ModelAndView mav = new ModelAndView("redirect:/fileList");
+
+		File updateFile = files.get(fileNr);
+		if (StringUtils.isNotEmpty(fileName)) {
+			updateFile.setTitle(fileName);
+		}
+
+		if (StringUtils.isNotEmpty(description)) {
+			updateFile.setDescription(description);
+		}
+
+		try {
+			DriveManager.updateFile(updateFile);
+		} catch (GeneralSecurityException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
