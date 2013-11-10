@@ -23,12 +23,12 @@
 			<th>
 				<@spring.message 'files.file.description' />
 			</th>
-			<th>
+			<th class="buttonCell">
 			</th>
 			<#if isAdmin>
-				<th>
+				<th class="buttonCell">
 				</th>
-				<th>
+				<th class="buttonCell">
 				</th>
 			</#if>
 		</tr>
@@ -42,14 +42,14 @@
 				<td>
 					${file.description}
 				</td>
-				<td>
+				<td class="buttonCell">
 					<@m.button 'files.file.download' '/file/${cnt}' false/>
 				</td>
 				<#if isAdmin>
-					<td>
+					<td class="buttonCell">
 						<@m.button 'files.file.edit' '/edit/${cnt}' false/>
 					</td>
-					<td>
+					<td class="buttonCell">
 						<@m.button 'files.file.delete' '/delete/${file.id}' false/>
 					</td>
 				</#if>

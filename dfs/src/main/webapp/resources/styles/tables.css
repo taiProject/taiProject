@@ -10,6 +10,10 @@
 	box-shadow: 0 0 3px 3px #000080;
 }
 
+.buttonCell {
+	width: 100px;
+}
+
 .filesTable td {
 	background-color: white;
 	min-width: 100px;

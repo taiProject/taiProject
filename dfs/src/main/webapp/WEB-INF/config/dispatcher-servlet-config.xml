@@ -16,7 +16,7 @@
 	<!-- file downloading -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<!-- maxUploadSize in bytes -->
-		<property name="maxUploadSize" value="1024000"/>
+		<property name="maxUploadSize" value="102400000"/>
 	</bean>
 
 	<!-- resources mapping -->

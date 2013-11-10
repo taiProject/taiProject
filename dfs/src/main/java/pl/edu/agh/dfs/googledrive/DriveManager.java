@@ -139,12 +139,36 @@ public abstract class DriveManager {
 		deleteFile(drive, fileId);
 	}
 
+	/**
+	 * Update an existing file's metadata and content.
+	 * 
+	 * @param service
+	 *            Drive API service instance.
+	 * @param fileId
+	 *            ID of the file to update.
+	 * @param newTitle
+	 *            New title for the file.
+	 * @param newDescription
+	 *            New description for the file.
+	 * @param newMimeType
+	 *            New MIME type for the file.
+	 * @param newFilename
+	 *            Filename of the new content to upload.
+	 * @return Updated file metadata if successful, {@code null} otherwise.
+	 */
 	public static File updateFile(String fileId, String title, String description, String mimeType, String fileName)
 			throws GeneralSecurityException, IOException, URISyntaxException {
 		Drive drive = getDriveService();
 		return updateFile(drive, fileId, title, description, mimeType, fileName, true);
 	}
 
+	/**
+	 * Update an existing file's metadata and content.
+	 * 
+	 * @param file
+	 *            File data to be updated
+	 * @return Updated file metadata if successful, {@code null} otherwise.
+	 */
 	public static File updateFile(File file) throws GeneralSecurityException, IOException, URISyntaxException {
 		Drive drive = getDriveService();
 		return drive.files().update(file.getId(), file).execute();
