@@ -4,6 +4,7 @@
 	<link href="<@spring.url '/resources/images/favicon.ico'/>" rel="shortcut icon" >
 	<link href="<@spring.url '/resources/styles/styles.css'/>" rel="stylesheet" type="text/css">
 	<link href="<@spring.url '/resources/styles/tables.css'/>" rel="stylesheet" type="text/css">
+	<link href="<@spring.url '/resources/styles/file.css'/>" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="applicationLogo">

@@ -10,17 +10,21 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import pl.edu.agh.dfs.googledrive.DriveManager;
 import pl.edu.agh.dfs.utils.SecurityHelper;
 
+import com.google.api.client.http.ByteArrayContent;
 import com.google.api.services.drive.model.File;
 
 @Controller
@@ -104,7 +108,7 @@ public class ApplicationNavigationController implements Serializable {
 	}
 
 	@RequestMapping(value = "/delete/{fileId}", method = RequestMethod.GET)
-	public String delete(@PathVariable("fileId") String fileId) {
+	public ModelAndView delete(@PathVariable("fileId") String fileId) {
 		try {
 			DriveManager.deleteFile(fileId);
 		} catch (GeneralSecurityException e) {
@@ -115,7 +119,72 @@ public class ApplicationNavigationController implements Serializable {
 			e.printStackTrace();
 		}
 
-		return "redirect:/fileList";
+		return new ModelAndView("redirect:/fileList");
+	}
+
+	@RequestMapping(value = "/deleteAll", method = RequestMethod.GET)
+	public ModelAndView delete() {
+		try {
+			for (File file : files) {
+				DriveManager.deleteFile(file.getId());
+			}
+		} catch (GeneralSecurityException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+
+		return new ModelAndView("redirect:/fileList");
+	}
+
+	@RequestMapping("/newFile")
+	public ModelAndView newFile() {
+		ModelAndView mav = new ModelAndView("file");
+
+		mav.addObject("newFile", true);
+
+		addCommonValues(mav, "fileList");
+		return mav;
+	}
+
+	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+	public ModelAndView uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("fileName") String fileName,
+			@RequestParam("description") String description) {
+		ModelAndView mav = new ModelAndView("redirect:/fileList");
+
+		if (file == null) {
+			return mav;
+		}
+
+		File uploadFile = new File();
+		if (StringUtils.isEmpty(fileName)) {
+			uploadFile.setTitle(file.getOriginalFilename());
+		} else {
+			uploadFile.setTitle(fileName);
+		}
+
+		if (StringUtils.isEmpty(description)) {
+			uploadFile.setDescription(file.getOriginalFilename());
+		} else {
+			uploadFile.setDescription(description);
+		}
+
+		uploadFile.setMimeType(file.getContentType());
+
+		try {
+			ByteArrayContent fileContent = new ByteArrayContent(file.getContentType(), file.getBytes());
+			DriveManager.getDriveService().files().insert(uploadFile, fileContent).execute();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (GeneralSecurityException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+
+		return mav;
 	}
 
 	private void addCommonValues(ModelAndView mav, String name) {

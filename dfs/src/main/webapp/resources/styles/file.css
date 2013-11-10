@@ -1,0 +1,14 @@
+@CHARSET "UTF-8";
+
+.fileInput {
+	width: 100%;
+}
+
+.textarea {
+	resize: vertical;
+}
+
+.fileTable {
+	width: 80%;
+	min-width: 600px;
+}

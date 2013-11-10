@@ -1,5 +1,7 @@
 package pl.edu.agh.dfs.utils;
 
+import org.apache.commons.lang.StringUtils;
+
 public abstract class MimeTypes {
 
 	private static String CSS = "text/css";
@@ -18,7 +20,7 @@ public abstract class MimeTypes {
 	private static String ZIP = "application/zip";
 
 	public static String getMimeType(String filename) {
-		if (filename == null || filename.length() == 0) {
+		if (StringUtils.isEmpty(filename)) {
 			return null;
 		}
 		filename = filename.toUpperCase();

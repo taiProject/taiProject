@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 
 .filesTable {
-	width: 98%;
+	width: 100%;
 	border: 1px solid #000080;
 	padding: 5px;
 	border-radius: 5px;
@@ -9,12 +9,13 @@
 
 .filesTable td {
 	background-color: white;
-	
+	min-width: 100px;
 }
 
 .filesTable th {
 	background-color: #000080;
 	border-radius: 5px;
+	min-width: 80px;
 }
 
 #filesTableHead {
@@ -39,4 +40,16 @@
 .tableButton:HOVER {
 	background-color: #0000af;
 	cursor: pointer;
+}
+
+.generalButtons {
+	width: 100%;
+}
+
+.button {
+	display: inline-block;
+	float: right;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 10px;
 }

@@ -41,7 +41,7 @@ public abstract class DriveManager {
 	 * 
 	 * @return Drive service object that is ready to make requests.
 	 */
-	private static Drive getDriveService() throws GeneralSecurityException, IOException, URISyntaxException {
+	public static Drive getDriveService() throws GeneralSecurityException, IOException, URISyntaxException {
 		HttpTransport httpTransport = new NetHttpTransport();
 		JacksonFactory jsonFactory = new JacksonFactory();
 		List<String> scopes = new ArrayList<String>();
