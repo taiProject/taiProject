@@ -2,12 +2,12 @@
 <#import "templates/spring.ftl" as spring />
 
 <div class="login loginBase" align="center">
-	<h1><@spring.message 'login.title' /></h1>
+	<h1 class="fontStyle"><@spring.message 'login.title' /></h1>
 
 	<form method="post" action="<@spring.url '/j_spring_security_check'/>">
 		<table>
 			<tr>
-				<td>
+				<td class="fontStyle">
 					<@spring.message 'login.username' />:
 				</td>
 				<td>
@@ -15,7 +15,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>
+				<td class="fontStyle">
 					<@spring.message 'login.password'/>:
 				</td>
 				<td>
