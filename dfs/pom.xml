@@ -38,14 +38,14 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>9.2-1003-jdbc4</version>
-        </dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.2-1003-jdbc4</version>
+		</dependency>
 
 
-        <!-- apache commons -->
+		<!-- apache commons -->
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
@@ -152,6 +152,26 @@
 					<stopPort>9966</stopPort>
 					<stopKey>foo</stopKey>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.liquibase</groupId>
+				<artifactId>liquibase-maven-plugin</artifactId>
+				<version>2.0.5</version>
+				<configuration>
+					<changeLogFile>src/main/resources/liquibase/db-changelog.xml</changeLogFile>
+					<driver>org.postgresql.Driver</driver>
+					<url>jdbc:postgresql://localhost:5432/taidb</url>
+					<username>postgres</username>
+					<password>qweasd</password>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>postgresql</groupId>
+						<artifactId>postgresql</artifactId>
+						<version>9.1-901.jdbc4</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>

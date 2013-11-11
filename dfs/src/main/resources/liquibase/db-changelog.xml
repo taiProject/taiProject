@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    					http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+	<!-- Liquibase allows to restore db model but can't create users and db 
+		itseld, therefore user is bound to do it himself -->
+
+	<changeSet id="201311111904" author="azarnowski">
+		<comment>user_seq sequence creation</comment>
+
+		<createSequence sequenceName="user_seq" incrementBy="1"
+			startValue="3" />
+
+		<rollback>
+			<dropSequence sequenceName="user_seq" />
+		</rollback>
+	</changeSet>
+
+	<changeSet id="201311111906" author="azarnowski">
+		<comment>create table</comment>
+
+		<createTable tableName="users">
+			<column name="id" type="BIGINT">
+				<constraints nullable="false" unique="true" primaryKey="true"
+					primaryKeyName="userid" />
+			</column>
+			<column name="login" type="varchar(50)">
+				<constraints nullable="false" unique="true" />
+			</column>
+			<column name="password" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="role_name" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+
+		<rollback>
+			<dropTable tableName="users" />
+		</rollback>
+	</changeSet>
+
+	<changeSet id="201311111919" author="azarnowski">
+		<comment>Adding admin</comment>
+
+		<insert tableName="users">
+			<column name="id" value="1" />
+			<column name="login" value="admin" />
+			<column name="password" value="123" />
+			<column name="role_name" value="ROLE_ADMIN" />
+		</insert>
+
+		<rollback>
+			<delete tableName="users">
+				<where>id = 1 and login = 'admin'</where>
+			</delete>
+		</rollback>
+	</changeSet>
+
+	<changeSet id="201311111923" author="azarnowski">
+		<comment>Adding user</comment>
+
+		<insert tableName="users">
+			<column name="id" value="2" />
+			<column name="login" value="user" />
+			<column name="password" value="123" />
+			<column name="role_name" value="ROLE_USER" />
+		</insert>
+
+		<rollback>
+			<delete tableName="users">
+				<where>id = 2 and login = 'user'</where>
+			</delete>
+		</rollback>
+	</changeSet>
+</databaseChangeLog>

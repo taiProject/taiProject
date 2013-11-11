@@ -12,11 +12,12 @@
 	<context:component-scan base-package="pl.edu.agh.dfs.controllers" />
 
 	<mvc:annotation-driven />
+	<mvc:default-servlet-handler/>
 	
 	<!-- file downloading -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<!-- maxUploadSize in bytes -->
-		<property name="maxUploadSize" value="102400000"/>
+		<!-- maxUploadSize in bytes: 15MB-->
+		<property name="maxUploadSize" value="15728640"/>
 	</bean>
 
 	<!-- resources mapping -->

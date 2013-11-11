@@ -12,35 +12,33 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
+
 import pl.edu.agh.dfs.daos.UserDao;
 import pl.edu.agh.dfs.models.User;
 
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
-    @Autowired
-    private UserDao userDao;
+	@Autowired
+	private UserDao userDao;
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String username = authentication.getName();
 		String password = authentication.getCredentials().toString();
 
-		SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
 		List<GrantedAuthority> authorities = new LinkedList<GrantedAuthority>();
-		authorities.add(authority);
+		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
-        User user = userDao.select(username);
-        if(user != null){
-            if (username.equals(user.getLogin()) && password.equals(user.getPassword())) {
-                if(user.getRoleName().equals("ROLE_ADMIN")){
-                    authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-                    return new UsernamePasswordAuthenticationToken(username, password, authorities);
-                } else {
-                    return new UsernamePasswordAuthenticationToken(username, password, authorities);
-                }
-            }
-        }
-        throw new BadCredentialsException("Bad credentials");
+		User user = userDao.select(username);
+		if (user != null) {
+			if (username.equals(user.getLogin()) && password.equals(user.getPassword())) {
+				if (user.getRoleName().equals("ROLE_ADMIN")) {
+					authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+				}
+				return new UsernamePasswordAuthenticationToken(username, password, authorities);
+			}
+		}
+		throw new BadCredentialsException("Bad credentials");
 	}
 
 	@Override
