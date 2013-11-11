@@ -15,8 +15,8 @@
 		</div>
 	</#if>
 	
-	<table class="filesTable">
-		<tr id="filesTableHead">
+	<table class="dfsTable">
+		<tr id="dfsTableHead">
 			<th>
 				<@spring.message 'files.file.name' />
 			</th>

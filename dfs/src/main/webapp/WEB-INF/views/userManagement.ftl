@@ -10,8 +10,9 @@
     <div class="generalButtons">
         <@m.button 'users.user.add' '/addUser' true/>
     </div>
-    <table class="usersTable">
-        <tr id="usersTableHead">
+
+    <table class="dfsTable">
+        <tr id="dfsTableHead">
             <th>
             <@spring.message 'users.user.login' />
             </th>
@@ -23,25 +24,26 @@
             <th class="buttonCell">
             </th>
         </tr>
-    <#if users??>
-        <#list users as user>
-            <tr>
-                <td>
-                ${user.login}
-                </td>
-                <td>
-                ${user.roleName}
-                </td>
-                <td class="buttonCell">
-                    <@m.button 'users.user.edit' '/editUser/${user.login}' false/>
-                </td>
-                <td class="buttonCell">
-                    <@m.button 'users.user.delete' '/deleteUser/${user.login}' false/>
-                </td>
-            </tr>
-        </#list>
-    </#if>
+	    <#if users??>
+	        <#list users as user>
+	            <tr>
+	                <td>
+	                ${user.login}
+	                </td>
+	                <td>
+	                ${user.roleName}
+	                </td>
+	                <td class="buttonCell">
+	                    <@m.button 'users.user.edit' '/editUser/${user.login}' false/>
+	                </td>
+	                <td class="buttonCell">
+	                    <@m.button 'users.user.delete' '/deleteUser/${user.login}' false/>
+	                </td>
+	            </tr>
+	        </#list>
+	    </#if>
     </table>
+
     <div class="generalButtons">
         <@m.button 'users.user.add' '/addUser' true/>
     </div>

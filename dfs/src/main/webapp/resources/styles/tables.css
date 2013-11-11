@@ -1,6 +1,6 @@
 @CHARSET "UTF-8";
 
-.filesTable {
+.dfsTable {
 	width: 100%;
 	border: 1px solid #000080;
 	padding: 5px;
@@ -14,18 +14,18 @@
 	width: 100px;
 }
 
-.filesTable td {
+.dfsTable td {
 	background-color: white;
 	min-width: 100px;
 }
 
-.filesTable th {
+.dfsTable th {
 	background-color: #000080;
 	border-radius: 5px;
 	min-width: 80px;
 }
 
-#filesTableHead {
+#dfsTableHead {
 	color: white;
 }
 

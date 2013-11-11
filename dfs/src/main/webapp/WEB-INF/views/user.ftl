@@ -35,7 +35,7 @@
                         <@spring.message 'user.password'/>
                     </td>
                     <td>
-                        <input class="loginInput fileInput" type="text" name="password" id="password" maxlength="64" <#if !newUser>value="${user.password}"</#if>/>
+                        <input class="loginInput fileInput" type="password" name="password" id="password" maxlength="64" <#if !newUser>value="${user.password}"</#if>/>
                     </td>
                 </tr>
                 <tr>
@@ -62,3 +62,5 @@
         </form>
     </center>
 </div>
+
+<#include "templates/footer.ftl">

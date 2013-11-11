@@ -15,19 +15,22 @@ import com.google.api.services.drive.model.File;
 public class DriveManagerTest {
 
 	private static String textFilePath;
-	private static String jpgFilePath;
-	private static String pngFilePath;
+
+	// private static String jpgFilePath;
+	// private static String pngFilePath;
 
 	@BeforeClass
 	public static void initialize() {
 		String path = DriveManagerTest.class.getResource("/testfiles/testfile.txt").toString();
 		textFilePath = path.substring(path.indexOf('/') + 1, path.length());
 
-		path = DriveManagerTest.class.getResource("/testfiles/sample.jpg").toString();
-		jpgFilePath = path.substring(path.indexOf('/') + 1, path.length());
-
-		path = DriveManagerTest.class.getResource("/testfiles/scroogeSample.png").toString();
-		pngFilePath = path.substring(path.indexOf('/') + 1, path.length());
+		// path =
+		// DriveManagerTest.class.getResource("/testfiles/sample.jpg").toString();
+		// jpgFilePath = path.substring(path.indexOf('/') + 1, path.length());
+		//
+		// path =
+		// DriveManagerTest.class.getResource("/testfiles/scroogeSample.png").toString();
+		// pngFilePath = path.substring(path.indexOf('/') + 1, path.length());
 	}
 
 	@Test
@@ -41,13 +44,13 @@ public class DriveManagerTest {
 			System.out.println(f.getTitle());
 		}
 
-		 DriveManager.deleteFile(fl.getId());
-		
-		 files = DriveManager.getAllFiles();
-		
-		 for (File f : files) {
-		 System.out.println(f.getTitle());
-		 }
+		DriveManager.deleteFile(fl.getId());
+
+		files = DriveManager.getAllFiles();
+
+		for (File f : files) {
+			System.out.println(f.getTitle());
+		}
 	}
 
 	@Test

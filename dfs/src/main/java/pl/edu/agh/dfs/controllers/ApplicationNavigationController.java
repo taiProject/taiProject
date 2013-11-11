@@ -6,7 +6,6 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -37,8 +36,9 @@ import com.google.api.services.drive.model.File;
 public class ApplicationNavigationController implements Serializable {
 
 	private List<File> files = null;
-    @Autowired
-    private UserDao userDao;
+
+	@Autowired
+	private UserDao userDao;
 
 	private final int BUFFER_SIZE = 4096;
 
@@ -73,22 +73,22 @@ public class ApplicationNavigationController implements Serializable {
 	public ModelAndView userManagement() {
 		ModelAndView mav = new ModelAndView("userManagement");
 
-        ArrayList<User> users = (ArrayList<User>) userDao.selectAll();
-        mav.addObject("users", users);
+		List<User> users = userDao.selectAll();
+		mav.addObject("users", users);
 
 		addCommonValues(mav, "userManagement");
 		return mav;
 	}
 
-    @RequestMapping("/addUser")
-    public ModelAndView addUser(){
-        ModelAndView mav = new ModelAndView("user");
+	@RequestMapping("/addUser")
+	public ModelAndView addUser() {
+		ModelAndView mav = new ModelAndView("user");
 
-        mav.addObject("newUser", true);
+		mav.addObject("newUser", true);
 
-        addCommonValues(mav, "user");
-        return mav;
-    }
+		addCommonValues(mav, "user");
+		return mav;
+	}
 
 	@RequestMapping(value = "/file/{fileNr}", method = RequestMethod.GET)
 	@ResponseBody
@@ -168,21 +168,22 @@ public class ApplicationNavigationController implements Serializable {
 		return mav;
 	}
 
-    @RequestMapping(value="/newUser", method = RequestMethod.POST)
-    public ModelAndView newUser(@RequestParam("login") String login, @RequestParam("password") String password, @RequestParam("role") String roleName){
-        ModelAndView mav = new ModelAndView("redirect:/userManagement");
+	@RequestMapping(value = "/newUser", method = RequestMethod.POST)
+	public ModelAndView newUser(@RequestParam("login") String login, @RequestParam("password") String password,
+			@RequestParam("role") String roleName) {
+		ModelAndView mav = new ModelAndView("redirect:/userManagement");
 
-        userDao.create(login, password, roleName);
+		userDao.create(login, password, roleName);
 
-        return mav;
-    }
+		return mav;
+	}
 
-    @RequestMapping(value="/deleteUser/{login}", method = RequestMethod.GET)
-    public ModelAndView deleteUser(@PathVariable("login") String login){
-        userDao.delete(login);
+	@RequestMapping(value = "/deleteUser/{login}", method = RequestMethod.GET)
+	public ModelAndView deleteUser(@PathVariable("login") String login) {
+		userDao.delete(login);
 
-        return new ModelAndView("redirect:/userManagement");
-    }
+		return new ModelAndView("redirect:/userManagement");
+	}
 
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
 	public ModelAndView uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("fileName") String fileName,
@@ -222,26 +223,27 @@ public class ApplicationNavigationController implements Serializable {
 		return mav;
 	}
 
-    @RequestMapping(value = "/editUser/{login}", method = RequestMethod.GET)
-    public ModelAndView editUser(@PathVariable("login") String login){
-        ModelAndView mav = new ModelAndView("user");
+	@RequestMapping(value = "/editUser/{login}", method = RequestMethod.GET)
+	public ModelAndView editUser(@PathVariable("login") String login) {
+		ModelAndView mav = new ModelAndView("user");
 
-        mav.addObject("user", userDao.select(login));
-        System.out.println(userDao.select(login).getRoleName());
-        mav.addObject("newUser", false);
-        addCommonValues(mav, "userManagement");
-        return mav;
-    }
+		mav.addObject("user", userDao.select(login));
+		System.out.println(userDao.select(login).getRoleName());
+		mav.addObject("newUser", false);
+		addCommonValues(mav, "userManagement");
+		return mav;
+	}
 
-    @RequestMapping(value = "/editUser", method = RequestMethod.POST)
-    public ModelAndView editUser(@RequestParam("login") String login, @RequestParam("password") String password, @RequestParam("role") String roleName){
-        ModelAndView mav = new ModelAndView("redirect:/userManagement");
+	@RequestMapping(value = "/editUser", method = RequestMethod.POST)
+	public ModelAndView editUser(@RequestParam("login") String login, @RequestParam("password") String password,
+			@RequestParam("role") String roleName) {
+		ModelAndView mav = new ModelAndView("redirect:/userManagement");
 
-        userDao.update(login, password, roleName);
-        mav.addObject("newUser", false);
+		userDao.update(login, password, roleName);
+		mav.addObject("newUser", false);
 
-        return mav;
-    }
+		return mav;
+	}
 
 	@RequestMapping(value = "/edit/{fileNr}", method = RequestMethod.GET)
 	public ModelAndView editFile(@PathVariable("fileNr") int fileNr) {
