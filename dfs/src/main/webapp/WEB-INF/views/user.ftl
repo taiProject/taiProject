@@ -9,7 +9,7 @@
 </#if>
 </div>
 
-<div class="contentDiv">
+<div class="contentDiv userDiv">
     <center>
         <#if !newUser>
             <#assign checked = (user.roleName == "ROLE_ADMIN")/>

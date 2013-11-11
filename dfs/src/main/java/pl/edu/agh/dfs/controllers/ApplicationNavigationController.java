@@ -228,7 +228,6 @@ public class ApplicationNavigationController implements Serializable {
 		ModelAndView mav = new ModelAndView("user");
 
 		mav.addObject("user", userDao.select(login));
-		System.out.println(userDao.select(login).getRoleName());
 		mav.addObject("newUser", false);
 		addCommonValues(mav, "userManagement");
 		return mav;

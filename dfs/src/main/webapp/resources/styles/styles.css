@@ -136,3 +136,21 @@ a {
 .menuButton:HOVER {
 	background-color: #0000af;
 }
+
+/* user form */
+
+.userDiv {
+	position: absolute;
+	left: 50%;
+	width: 450px;
+	margin-left: -225px;
+	border-radius: 5px;
+	-moz-box-shadow: 0 0 5px 5px #000080;
+	-webkit-box-shadow: 0 0 5px 5px #000080;
+	box-shadow: 0 0 5px 5px #000080;
+}
+
+.userTable {
+	width: 95%;
+	margin: 8px 8px 8px 8px;
+}
