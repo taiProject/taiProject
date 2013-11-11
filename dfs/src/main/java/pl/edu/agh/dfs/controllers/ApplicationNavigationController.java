@@ -6,11 +6,13 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +23,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import pl.edu.agh.dfs.daos.UserDao;
 import pl.edu.agh.dfs.googledrive.DriveManager;
+import pl.edu.agh.dfs.models.User;
 import pl.edu.agh.dfs.utils.SecurityHelper;
 
 import com.google.api.client.http.ByteArrayContent;
@@ -33,6 +37,8 @@ import com.google.api.services.drive.model.File;
 public class ApplicationNavigationController implements Serializable {
 
 	private List<File> files = null;
+    @Autowired
+    private UserDao userDao;
 
 	private final int BUFFER_SIZE = 4096;
 
@@ -67,9 +73,22 @@ public class ApplicationNavigationController implements Serializable {
 	public ModelAndView userManagement() {
 		ModelAndView mav = new ModelAndView("userManagement");
 
+        ArrayList<User> users = (ArrayList<User>) userDao.selectAll();
+        mav.addObject("users", users);
+
 		addCommonValues(mav, "userManagement");
 		return mav;
 	}
+
+    @RequestMapping("/addUser")
+    public ModelAndView addUser(){
+        ModelAndView mav = new ModelAndView("user");
+
+        mav.addObject("newUser", true);
+
+        addCommonValues(mav, "user");
+        return mav;
+    }
 
 	@RequestMapping(value = "/file/{fileNr}", method = RequestMethod.GET)
 	@ResponseBody
@@ -149,6 +168,22 @@ public class ApplicationNavigationController implements Serializable {
 		return mav;
 	}
 
+    @RequestMapping(value="/newUser", method = RequestMethod.POST)
+    public ModelAndView newUser(@RequestParam("login") String login, @RequestParam("password") String password, @RequestParam("role") String roleName){
+        ModelAndView mav = new ModelAndView("redirect:/userManagement");
+
+        userDao.create(login, password, roleName);
+
+        return mav;
+    }
+
+    @RequestMapping(value="/deleteUser/{login}", method = RequestMethod.GET)
+    public ModelAndView deleteUser(@PathVariable("login") String login){
+        userDao.delete(login);
+
+        return new ModelAndView("redirect:/userManagement");
+    }
+
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
 	public ModelAndView uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("fileName") String fileName,
 			@RequestParam("description") String description) {
@@ -186,6 +221,27 @@ public class ApplicationNavigationController implements Serializable {
 
 		return mav;
 	}
+
+    @RequestMapping(value = "/editUser/{login}", method = RequestMethod.GET)
+    public ModelAndView editUser(@PathVariable("login") String login){
+        ModelAndView mav = new ModelAndView("user");
+
+        mav.addObject("user", userDao.select(login));
+        System.out.println(userDao.select(login).getRoleName());
+        mav.addObject("newUser", false);
+        addCommonValues(mav, "userManagement");
+        return mav;
+    }
+
+    @RequestMapping(value = "/editUser", method = RequestMethod.POST)
+    public ModelAndView editUser(@RequestParam("login") String login, @RequestParam("password") String password, @RequestParam("role") String roleName){
+        ModelAndView mav = new ModelAndView("redirect:/userManagement");
+
+        userDao.update(login, password, roleName);
+        mav.addObject("newUser", false);
+
+        return mav;
+    }
 
 	@RequestMapping(value = "/edit/{fileNr}", method = RequestMethod.GET)
 	public ModelAndView editFile(@PathVariable("fileNr") int fileNr) {

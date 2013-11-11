@@ -61,7 +61,9 @@
 	
 	<#if isAdmin>
 		<div class="generalButtons">
+            </br>
 			<@m.button 'files.file.delete.all' '/deleteAll' true/>
+
 			<@m.button 'files.file.new' '/newFile' true/>
 		</div>
 	</#if>
