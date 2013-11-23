@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,6 +69,17 @@ public class ApplicationNavigationController implements Serializable {
 	public ModelAndView userInfo() {
 		ModelAndView mav = new ModelAndView("userInfo");
 
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String login = auth.getName();
+        System.out.println(auth.getAuthorities().size());
+
+        if(auth.getAuthorities().size() == 1){
+            mav.addObject("admin", false);
+        } else {
+            mav.addObject("admin", true);
+        }
+        mav.addObject("login", login);
+
 		addCommonValues(mav, "userInfo");
 		return mav;
 	}
@@ -85,6 +100,7 @@ public class ApplicationNavigationController implements Serializable {
 		ModelAndView mav = new ModelAndView("user");
 
 		mav.addObject("newUser", true);
+		mav.addObject("admin", true);
 
 		addCommonValues(mav, "user");
 		return mav;
@@ -229,6 +245,7 @@ public class ApplicationNavigationController implements Serializable {
 
 		mav.addObject("user", userDao.select(login));
 		mav.addObject("newUser", false);
+		mav.addObject("admin", true);
 		addCommonValues(mav, "userManagement");
 		return mav;
 	}
@@ -243,6 +260,46 @@ public class ApplicationNavigationController implements Serializable {
 
 		return mav;
 	}
+
+    @RequestMapping(value = "/editUserInfo", method = RequestMethod.POST)
+    public ModelAndView editUserInfo(@RequestParam("login") String login, @RequestParam("newLogin") String newLogin, @RequestParam("password") String password, @RequestParam("passwordReWrite") String passwordReWrite,
+                                     @RequestParam("oldPassword") String oldPassword, @RequestParam("role") String roleName) {
+        ModelAndView mav = new ModelAndView("/userInfo");
+
+        mav.addObject("login", login);
+        if(roleName.equals("ROLE_ADMIN")){
+            mav.addObject("admin", true);
+        } else {
+            mav.addObject("admin", false);
+        }
+        if(!oldPassword.equals("") && oldPassword.equals(userDao.select(login).getPassword())){
+            if(password.equals("")){
+                if(!login.equals(newLogin)){
+                    userDao.delete(login);
+                    userDao.create(newLogin, oldPassword, roleName);
+                }
+                mav = new ModelAndView("redirect:/index");
+            } else {
+                if(password.equals(passwordReWrite)){
+                    if(!login.equals(newLogin)){
+                        userDao.delete(login);
+                        userDao.create(newLogin, password, roleName);
+                    } else {
+                        userDao.update(login, password, roleName);
+                    }
+                    mav = new ModelAndView("redirect:/index");
+                } else {
+                    mav.addObject("message", "mismatch password");
+                }
+            }
+        } else {
+            mav.addObject("message", "wrong old");
+        }
+
+        addCommonValues(mav, "userInfo");
+
+        return mav;
+    }
 
 	@RequestMapping(value = "/edit/{fileNr}", method = RequestMethod.GET)
 	public ModelAndView editFile(@PathVariable("fileNr") int fileNr) {
