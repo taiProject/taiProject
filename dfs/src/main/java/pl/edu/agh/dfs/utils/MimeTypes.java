@@ -19,6 +19,11 @@ public abstract class MimeTypes {
 	private static String XML = "text/xml";
 	private static String ZIP = "application/zip";
 
+    /**
+     *
+     * @param filename name of file with extension
+     * @return mime type of the file needed in files uploading on Google Drive
+     */
 	public static String getMimeType(String filename) {
 		if (StringUtils.isEmpty(filename)) {
 			return null;

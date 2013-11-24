@@ -12,6 +12,10 @@ import org.springframework.web.servlet.ModelAndView;
 @SuppressWarnings("serial")
 public class SecurityNavigationController implements Serializable {
 
+    /**
+     *
+     * @return Model and view of login page.
+     */
 	@RequestMapping("/login")
 	public ModelAndView login() {
 		ModelAndView mav = new ModelAndView("login");
@@ -19,6 +23,10 @@ public class SecurityNavigationController implements Serializable {
         return mav;
 	}
 
+    /**
+     *
+     * @return Model and view after login failure.
+     */
 	@RequestMapping("/loginfailed")
 	public ModelAndView loginFailed() {
 		ModelAndView mav = new ModelAndView("login");
@@ -28,6 +36,10 @@ public class SecurityNavigationController implements Serializable {
 		return mav;
 	}
 
+    /**
+     *
+     * @return Model and view after succesfully logout
+     */
 	@RequestMapping("/logout")
 	public ModelAndView logout() {
 		ModelAndView mav = new ModelAndView("login");
