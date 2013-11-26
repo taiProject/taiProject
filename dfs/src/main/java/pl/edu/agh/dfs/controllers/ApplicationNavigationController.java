@@ -34,6 +34,10 @@ import pl.edu.agh.dfs.utils.SecurityHelper;
 import com.google.api.client.http.ByteArrayContent;
 import com.google.api.services.drive.model.File;
 
+/**
+ * Main controller of application. Navigates through the pages and maintain needed operations.
+ */
+
 @Controller
 @Scope("session")
 @SuppressWarnings("serial")
@@ -78,11 +82,9 @@ public class ApplicationNavigationController implements Serializable {
 	public ModelAndView userInfo() {
 		ModelAndView mav = new ModelAndView("userInfo");
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String login = auth.getName();
-        System.out.println(auth.getAuthorities().size());
+        String login = SecurityHelper.getUsername();
 
-        if(auth.getAuthorities().size() == 1){
+        if(SecurityHelper.getAuthorities().size() == 1){
             mav.addObject("admin", false);
         } else {
             mav.addObject("admin", true);

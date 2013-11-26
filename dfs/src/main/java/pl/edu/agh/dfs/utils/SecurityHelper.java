@@ -1,10 +1,12 @@
 package pl.edu.agh.dfs.utils;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import sun.security.jca.ProviderList;
 
 public class SecurityHelper {
 
@@ -25,4 +27,8 @@ public class SecurityHelper {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		return authentication.getName();
 	}
+
+    public static Collection<? extends GrantedAuthority> getAuthorities() {
+        return SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+    }
 }
