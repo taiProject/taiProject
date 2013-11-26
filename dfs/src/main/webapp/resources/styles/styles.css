@@ -152,5 +152,10 @@ a {
 
 .userTable {
 	width: 95%;
+	
 	margin: 8px 8px 8px 8px;
+}
+
+.userTableTd {
+	text-align: right;
 }

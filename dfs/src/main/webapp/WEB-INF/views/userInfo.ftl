@@ -12,18 +12,18 @@
 	
 	<div class="contentDiv">
 	    <form method="post" action="<@spring.url '/editUserInfo'/>" enctype="multipart/form-data">
-	        <table class="userTable">
+	        <table class="userTable dfsTable">
 	            <input type="hidden" type="text" name="login" id="login" maxlength="64" value="${login}" />
 	            <tr>
-	                <td class="fontStyle">
+	                <td class="fontStyle userTableTd">
 	                    <@spring.message 'user.login'/>
 	                </td>
-	                <td>
+	                <td width="80%">
 	                    <input class="loginInput fileInput" type="text" name="newLogin" id="newLogin" maxlength="64" value="${login}" />
 	                </td>
 	            </tr>
 	            <tr>
-	                <td class="fontStyle">
+	                <td class="fontStyle userTableTd">
 	                <@spring.message 'user.oldPassword'/>
 	                </td>
 	                <td>
@@ -31,7 +31,7 @@
 	                </td>
 	            </tr>
 	            <tr>
-	                <td class="fontStyle">
+	                <td class="fontStyle userTableTd">
 	                <@spring.message 'user.newPassword'/>
 	                </td>
 	                <td>
@@ -39,7 +39,7 @@
 	                </td>
 	            </tr>
 	            <tr>
-	                <td class="fontStyle">
+	                <td class="fontStyle userTableTd">
 	                <@spring.message 'user.passwordReWrite'/>
 	                </td>
 	                <td>
