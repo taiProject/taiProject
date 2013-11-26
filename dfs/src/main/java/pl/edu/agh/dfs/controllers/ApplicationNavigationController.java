@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import pl.edu.agh.dfs.daos.UserDao;
@@ -271,31 +273,7 @@ public class ApplicationNavigationController implements Serializable {
 			return mav;
 		}
 
-		File uploadFile = new File();
-		if (StringUtils.isEmpty(fileName)) {
-			uploadFile.setTitle(file.getOriginalFilename());
-		} else {
-			uploadFile.setTitle(fileName);
-		}
-
-		if (StringUtils.isEmpty(description)) {
-			uploadFile.setDescription(file.getOriginalFilename());
-		} else {
-			uploadFile.setDescription(description);
-		}
-
-		uploadFile.setMimeType(file.getContentType());
-
-		try {
-			ByteArrayContent fileContent = new ByteArrayContent(file.getContentType(), file.getBytes());
-			manager.insertFile(uploadFile, fileContent);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (GeneralSecurityException e) {
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
+		uploadNewFile(file, fileName, description);
 
 		return mav;
 	}
@@ -450,6 +428,32 @@ public class ApplicationNavigationController implements Serializable {
 		return mav;
 	}
 
+	/**
+	 * Uploads file from Quick Upload and sends it Google Drive
+	 * 
+	 * @param request
+	 *            Multipart request with file
+	 * @return redirection to model
+	 */
+	@RequestMapping(value = "/quickUploadFile", method = RequestMethod.POST)
+	public ModelAndView quickFileUpload(MultipartHttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("/fileTable");
+
+		Iterator<String> iter = request.getFileNames();
+
+		while (iter.hasNext()) {
+			MultipartFile file = request.getFile(iter.next());
+			uploadNewFile(file, file.getOriginalFilename(), file.getOriginalFilename());
+		}
+
+		downloadFiles();
+		mav.addObject("files", files);
+
+		addCommonValues(mav, "fileList");
+
+		return mav;
+	}
+
 	private void addCommonValues(ModelAndView mav, String name) {
 		mav.addObject("isAdmin", SecurityHelper.hasUserRole("ROLE_ADMIN"));
 		mav.addObject("username", SecurityHelper.getUsername());
@@ -462,6 +466,35 @@ public class ApplicationNavigationController implements Serializable {
 		} catch (GeneralSecurityException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void uploadNewFile(MultipartFile file, String fileName, String description) {
+
+		File uploadFile = new File();
+		if (StringUtils.isEmpty(fileName)) {
+			uploadFile.setTitle(file.getOriginalFilename());
+		} else {
+			uploadFile.setTitle(fileName);
+		}
+
+		if (StringUtils.isEmpty(description)) {
+			uploadFile.setDescription(file.getOriginalFilename());
+		} else {
+			uploadFile.setDescription(description);
+		}
+
+		uploadFile.setMimeType(file.getContentType());
+
+		try {
+			ByteArrayContent fileContent = new ByteArrayContent(file.getContentType(), file.getBytes());
+			manager.insertFile(uploadFile, fileContent);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (GeneralSecurityException e) {
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
 			e.printStackTrace();

@@ -1,0 +1,13 @@
+#dragandrophandler {
+	border: 2px dotted #0B85A1;
+	width: 600px;
+	color: #92AAB0;
+	text-align: left;
+	vertical-align: middle;
+	padding: 10px 10px 10 10px;
+	margin-bottom: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 170%;
+	text-align: center;
+}
