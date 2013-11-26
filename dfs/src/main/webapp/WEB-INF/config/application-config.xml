@@ -7,6 +7,8 @@
 		http://www.springframework.org/schema/context 
 		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
+	<context:component-scan base-package="pl.edu.agh.dfs" />
+
     <bean id="userDao" class="pl.edu.agh.dfs.daos.UserDao">
         <property name="dataSource" ref="dataSource"/>
     </bean>
@@ -18,7 +20,9 @@
         <property name='password' value='qweasd'/>
     </bean>
 
-	<context:component-scan base-package="pl.edu.agh.dfs" />
-
-
+	<bean id="googleDrive" class="pl.edu.agh.dfs.googledrive.GoogleDriveImpl" scope="prototype" /> 
+	
+	<bean id="driveManager" class="pl.edu.agh.dfs.googledrive.DriveManager">
+		<property name="drive" ref="googleDrive"/>
+	</bean>
 </beans>

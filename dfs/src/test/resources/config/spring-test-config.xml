@@ -16,4 +16,12 @@
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
+	<context:component-scan base-package="pl.edu.agh.dfs.googledrive" />
+
+	<bean id="googleDriveTest" class="pl.edu.agh.dfs.googledrive.GoogleDriveTestImpl" scope="singleton"/>
+	
+	<bean id="driveManager" class="pl.edu.agh.dfs.googledrive.DriveManager">
+		<property name="drive" ref="googleDriveTest"/>
+	</bean>
+
 </beans>
