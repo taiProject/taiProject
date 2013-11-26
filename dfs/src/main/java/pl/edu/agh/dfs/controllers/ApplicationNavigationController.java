@@ -45,8 +45,6 @@ import com.google.api.services.drive.model.File;
 @SuppressWarnings("serial")
 public class ApplicationNavigationController implements Serializable {
 
-	private final int BUFFER_SIZE = 4096;
-
 	private List<File> files = null;
 
 	@Autowired
