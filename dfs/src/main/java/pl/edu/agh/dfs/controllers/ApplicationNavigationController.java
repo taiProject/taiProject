@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -69,6 +69,11 @@ public class ApplicationNavigationController implements Serializable {
 	public ModelAndView fileList() {
 		ModelAndView mav = new ModelAndView("fileList");
 
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		downloadFiles();
 		mav.addObject("files", files);
 
@@ -134,7 +139,6 @@ public class ApplicationNavigationController implements Serializable {
 	 * 
 	 */
 	@RequestMapping(value = "/file/{fileNr}", method = RequestMethod.GET)
-	@ResponseBody
 	public void getFile(@PathVariable("fileNr") int fileNr, HttpServletResponse response) {
 		if (files == null) {
 			downloadFiles();
@@ -145,18 +149,13 @@ public class ApplicationNavigationController implements Serializable {
 
 		response.setContentType(file.getMimeType());
 		response.setContentLength((int) fileSize);
+		response.setHeader("Content-Disposition", "attachment;filename=" + file.getOriginalFilename());
 
 		try {
 			InputStream inputStream = manager.downloadFile(file);
 			OutputStream outStream = response.getOutputStream();
 
-			byte[] buffer = new byte[BUFFER_SIZE];
-			int bytesRead = -1;
-
-			// write bytes read from the input stream into the output stream
-			while ((bytesRead = inputStream.read(buffer)) != -1) {
-				outStream.write(buffer, 0, bytesRead);
-			}
+			IOUtils.copy(inputStream, outStream);
 
 			inputStream.close();
 			outStream.close();
@@ -178,6 +177,7 @@ public class ApplicationNavigationController implements Serializable {
 	public ModelAndView delete(@PathVariable("fileId") String fileId) {
 		try {
 			manager.deleteFile(fileId);
+			downloadFiles();
 		} catch (GeneralSecurityException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
